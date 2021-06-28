@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'connect',
+    loadChildren: () => import('./modals/connect/connect.module').then( m => m.ConnectPageModule)
+  },
+  {
+    path: 'add-to-stock',
+    loadChildren: () => import('./modals/add-to-stock/add-to-stock.module').then( m => m.AddToStockPageModule)
+  },
 ];
 
 @NgModule({
