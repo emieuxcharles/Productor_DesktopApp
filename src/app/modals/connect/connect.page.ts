@@ -60,6 +60,9 @@ export class ConnectPage implements OnInit {
 
   signUp(){
     this.afAuth.createUserWithEmailAndPassword(this.dataUser.email, this.dataUser.password);
+    this.afDB.list('Productors').push({
+      productorName: this.dataUser.email,
+    });
     this.dataUser = {
       email: '',
       password: ''

@@ -27,12 +27,14 @@
               <ion-col>Product Name</ion-col><ion-col>Description</ion-col><ion-col>Quantity</ion-col>
             </ion-row>
             <ion-grid style="overflow-x: hidden;overflow-y:scroll;height: 500px;">
+              <div *ngFor="let product of productsInventory | async">
+                <ion-row  (click)="modifyProductModal(product)" *ngIf="product.owner == connecterUserEmail" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
+                  <ion-col>{{ product.Name | json }}</ion-col>
+                  <ion-col>{{ product.Desc | json }}</ion-col>
+                  <ion-col>{{ product.Quantity | json }}</ion-col>
+                </ion-row>
+              </div>
               
-              <ion-row  (click)="modifyProductModal(product)"  *ngFor="let product of productsInventory | async" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
-                <ion-col>{{ product.Name | json }}</ion-col>
-                <ion-col>{{ product.Desc | json }}</ion-col>
-                <ion-col>{{ product.Quantity | json }}</ion-col>
-              </ion-row>
             </ion-grid>
           </ion-card-content>
         </ion-card>
@@ -50,16 +52,18 @@
               <ion-col>Product Name</ion-col><ion-col>Quantity</ion-col><ion-col>Expiration Date</ion-col>
             </ion-row>
             <ion-grid style="overflow-x: hidden;overflow-y:scroll;height: 500px;">
-              
               <div *ngFor="let i of getTransactionList | async">
-                <ion-row (click)="modifyProductModal(i)" *ngIf="i.expirationDate < returnTodayDate()" [ngStyle]="i.expirationDate < returnTodayDate() && {'background-color': 'red', 'color': 'black'}" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
-                  <ion-col>{{ i.Name | json }}</ion-col>
-                  <ion-col>{{ i.Quantity | json }}</ion-col>
-                  <ion-col>{{ i.expirationDate | json }}</ion-col>
-                  <!-- <p><strong>Item Key: </strong>{{i | json}}</p> -->
-
-                </ion-row>
-              </div>
+                <div *ngIf="i.owner == connecterUserEmail" >
+                  <ion-row (click)="modifyProductModal(i)" *ngIf="i.expirationDate < returnTodayDate()" [ngStyle]="i.expirationDate < returnTodayDate() && {'background-color': 'red', 'color': 'black'}" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
+                    <ion-col>{{ i.Name | json }}</ion-col>
+                    <ion-col>{{ i.Quantity | json }}</ion-col>
+                    <ion-col>{{ i.expirationDate | json }}</ion-col>
+                    <!-- <p><strong>Item Key: </strong>{{i | json}}</p> -->
+  
+                  </ion-row>
+                </div>
+              </div>              
+              
 
               <div *ngFor="let i of getTransactionList | async">
                 <div *ngIf="i.expirationDate > returnTodayDate()">
@@ -99,6 +103,8 @@
               <ion-row style="margin-bottom:10px;background-color: rgb(170, 170, 170);padding: 10px;border-radius: 10px;color:black;">
               <ion-col>Order Date</ion-col>
               <ion-col>Products</ion-col>
+              <ion-col>Quantity</ion-col>
+              <ion-col>Ship to</ion-col>
               <!-- <ion-col>Productor name</ion-col> -->
             </ion-row>
             <ion-grid  style="overflow-x: hidden;overflow-y:scroll;height: 500px;">
@@ -106,6 +112,8 @@
                 <ion-row *ngIf="order.productorName.includes(connecterUserEmail)"  style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
                   <ion-col>{{ order.orderDate | json }}</ion-col>
                   <ion-col>{{ order.products | json }}</ion-col>
+                  <ion-col>{{ order.quantity | json }}</ion-col>
+                  <ion-col>{{ order.from | json }}</ion-col>
                   <!-- <ion-col>{{ order.productorName | json }}</ion-col> -->
                 </ion-row>
               </div>
