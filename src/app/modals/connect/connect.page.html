@@ -19,15 +19,16 @@
     <ion-card-content>
       <ion-item>
         <ion-label>Mail :</ion-label>
-        <ion-input type="email" [(ngModel)]="dataUser.email" placeholder="text"></ion-input>
+        <ion-input type="email" [(ngModel)]="dataUser.email" placeholder="Your email here..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Password :</ion-label>
-        <ion-input type="password" [(ngModel)]="dataUser.password" placeholder="text"></ion-input>
+        <ion-input type="password" [(ngModel)]="dataUser.password" placeholder="...and your password goes here"></ion-input>
       </ion-item>
       <br>
       <ion-button expand="block" (click)="login()">Login</ion-button>
       <br>
+      <h2 style="text-align: center;margin-top: 15px;margin-bottom: 10px;">No account yet ?</h2>
       <ion-button color="tertiary" expand="block" (click)="signUp()">Sign Up</ion-button>
     </ion-card-content>
   </ion-card>

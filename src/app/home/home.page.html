@@ -66,13 +66,15 @@
               
 
               <div *ngFor="let i of getTransactionList | async">
-                <div *ngIf="i.expirationDate > returnTodayDate()">
-                  <ion-row (click)="modifyProductModal(i)" *ngIf="i.expirationDate <= returnInSevenDay()" [ngStyle]="i.expirationDate <= returnInSevenDay() && {'background-color': 'orange', 'color': 'black'}" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
-                    <ion-col>{{ i.Name | json }}</ion-col>
-                    <ion-col>{{ i.Quantity | json }}</ion-col>
-                    <ion-col>{{ i.expirationDate | json }}</ion-col>
-                  </ion-row>
-                </div>                
+                <div *ngIf="i.owner == connecterUserEmail">
+                  <div *ngIf="i.expirationDate > returnTodayDate()">
+                    <ion-row (click)="modifyProductModal(i)" *ngIf="i.expirationDate <= returnInSevenDay()" [ngStyle]="i.expirationDate <= returnInSevenDay() && {'background-color': 'orange', 'color': 'black'}" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
+                      <ion-col>{{ i.Name | json }}</ion-col>
+                      <ion-col>{{ i.Quantity | json }}</ion-col>
+                      <ion-col>{{ i.expirationDate | json }}</ion-col>
+                    </ion-row>
+                  </div>
+                </div>              
               </div>
 
               <!-- <div *ngFor="let i of getTransactionList | async">
@@ -109,20 +111,15 @@
             </ion-row>
             <ion-grid  style="overflow-x: hidden;overflow-y:scroll;height: 500px;">
               <div *ngFor="let order of ordersInventory | async">
-                <ion-row *ngIf="order.productorName.includes(connecterUserEmail)"  style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
-                  <ion-col>{{ order.orderDate | json }}</ion-col>
-                  <ion-col>{{ order.products | json }}</ion-col>
-                  <ion-col>{{ order.quantity | json }}</ion-col>
-                  <ion-col>{{ order.from | json }}</ion-col>
-                  <!-- <ion-col>{{ order.productorName | json }}</ion-col> -->
-                </ion-row>
+                <div *ngIf="order.productorName.includes(connecterUserEmail)" >
+                  <ion-row *ngFor="let i of order.products" style="margin-bottom:10px;background-color: black;padding: 10px;border-radius: 10px;">
+                    <ion-col>{{ order.orderDate | json }}</ion-col>
+                    <ion-col>{{ i.product | json }}</ion-col> 
+                    <ion-col>{{ i.quantity | json }}</ion-col>
+                    <ion-col>{{ order.from | json }}</ion-col>
+                  </ion-row>
+                </div>
               </div>
-
-              
-              
-
-              
-
             </ion-grid>
           </ion-card-content>
         </ion-card>
